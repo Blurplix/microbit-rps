@@ -5,14 +5,18 @@ input.onButtonPressed(Button.A, function () {
                 if (select < 3) {
                     select += 1
                 } else {
-                    select = 0
+                    select = 1
                 }
             } else {
                 lastKey = "a"
                 select = 1
             }
         }
-        seznam[2 + select].showImage(0)
+        if (select == 0) {
+            error()
+        } else {
+            seznam[2 + select].showImage(0)
+        }
     }
 })
 control.onEvent(EventBusSource.MICROBIT_ID_IO_P0, EventBusValue.MICROBIT_EVT_ANY, function () {
@@ -37,18 +41,7 @@ input.onButtonPressed(Button.AB, function () {
             pins.digitalWritePin(DigitalPin.P1, 0)
         }
     } else {
-        for (let index = 0; index < 3; index++) {
-            basic.showLeds(`
-                # # # # #
-                # # # # #
-                # # # # #
-                # # # # #
-                # # # # #
-                `)
-            basic.pause(50)
-            basic.clearScreen()
-            basic.pause(100)
-        }
+        error()
     }
 })
 input.onButtonPressed(Button.B, function () {
@@ -74,24 +67,31 @@ input.onButtonPressed(Button.B, function () {
                 EventBusValue.MICROBIT_EVT_ANY
                 )
             } else {
-                seznam[2 + bot].showImage(0)
+                if (bot == 0) {
+                    error()
+                } else {
+                    seznam[2 + bot].showImage(0)
+                }
             }
         } else {
-            for (let index = 0; index < 3; index++) {
-                basic.showLeds(`
-                    # # # # #
-                    # # # # #
-                    # # # # #
-                    # # # # #
-                    # # # # #
-                    `)
-                basic.pause(50)
-                basic.clearScreen()
-                basic.pause(100)
-            }
+            error()
         }
     }
 })
+function error () {
+    for (let index = 0; index < 3; index++) {
+        basic.showLeds(`
+            # # # # #
+            # # # # #
+            # # # # #
+            # # # # #
+            # # # # #
+            `)
+        basic.pause(50)
+        basic.clearScreen()
+        basic.pause(100)
+    }
+}
 let bot = 0
 let pozice = 0
 let running = 0
